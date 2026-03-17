@@ -42,7 +42,8 @@ export const useCategories = (idWallet: Ref<number>) => {
     queryFn: async () => {
       const response = await API.get(`categories/wallet/${idWallet.value}`)
       const responseJson = await response.json()
-      return responseJson.map((item: any) => Category.fromRaw(item))
+      const rawItem = Array.isArray(responseJson) ? responseJson : []
+      return rawItem.map((item: any) => Category.fromRaw(item))
     },
     enabled: computed(() => !!idWallet.value),
   })

@@ -112,7 +112,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/vue'
-import { useLocalStorage, useSpeechRecognition } from '@vueuse/core'
+import { useLocalStorage } from '@vueuse/core'
 import { pricetagsOutline, swapHorizontalOutline, walletOutline } from 'ionicons/icons'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
@@ -128,15 +128,7 @@ const { data: wallet, isLoading, isError } = useWallet(defaultWalletId)
 
 const categories = computed(() => wallet.value?.categories || [])
 
-const { isListening, result, startListening, stopListening } = useSpeechRecognition()
 
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('ru-RU', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(date)
-}
 
 const formatAmount = (amount: number) => {
   return new Intl.NumberFormat('ru-RU', {
