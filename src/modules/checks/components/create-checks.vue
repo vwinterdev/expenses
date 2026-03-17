@@ -140,8 +140,8 @@ import {
   IonToolbar,
 } from '@ionic/vue'
 import { toTypedSchema } from '@vee-validate/zod'
-import { add, cashOutline, micOutline, stopCircleOutline } from 'ionicons/icons'
 import { useSpeechRecognition } from '@vueuse/core'
+import { add, cashOutline, micOutline, stopCircleOutline } from 'ionicons/icons'
 import { useForm } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
 import { z } from 'zod'

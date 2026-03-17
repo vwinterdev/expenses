@@ -112,7 +112,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/vue'
-import { useLocalStorage } from '@vueuse/core'
+import { useLocalStorage, useSpeechRecognition } from '@vueuse/core'
 import { pricetagsOutline, swapHorizontalOutline, walletOutline } from 'ionicons/icons'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
@@ -120,7 +120,6 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import SettingsMenu from '@/modules/app/components/settings-menu.vue'
 import CreateChecks from '@/modules/checks/components/create-checks.vue'
 import { useWallet } from '@/modules/Wallet/composables/useWallet'
-import { useSpeechRecognition } from '@vueuse/core'
 
 const router = useRouter()
 const defaultWalletId = useLocalStorage('defaultWalletId', '')
