@@ -128,8 +128,6 @@ const { data: wallet, isLoading, isError } = useWallet(defaultWalletId)
 
 const categories = computed(() => wallet.value?.categories || [])
 
-
-
 const formatAmount = (amount: number) => {
   return new Intl.NumberFormat('ru-RU', {
     style: 'currency',
