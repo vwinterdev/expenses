@@ -61,7 +61,7 @@ export const useLogout = () => {
     mutationFn: async () => {
       // Вызываем logout на сервере
       // Сервер сам очистит куки через Set-Cookie с истекшим expires
-      await API.post('auth/logout')
+      await API.post('auth/signout')
     },
   })
 }

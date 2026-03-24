@@ -3,7 +3,7 @@
     <form class="login-wrapper" @submit="onSubmit">
       <div class="login-header">
         <ion-icon :icon="walletOutline" class="login-logo"></ion-icon>
-        <h1>My Spend</h1>
+        <h1>Кошелек</h1>
         <p>Войдите в свой аккаунт</p>
       </div>
 

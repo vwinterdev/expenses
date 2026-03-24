@@ -47,7 +47,7 @@
             placeholder="0"
             :class="{ 'ion-invalid ion-touched': errors.amount }"
           >
-            <ion-icon :icon="cashOutline" slot="start" />
+            <ion-icon :icon="type === 'income' ? addOutline : removeOutline" slot="start" />
             <span slot="end" class="currency">₽</span>
           </ion-input>
           <p class="field-error" :class="{ visible: errors.amount }">{{ errors.amount || '&nbsp;' }}</p>
@@ -141,13 +141,12 @@ import {
 } from '@ionic/vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useSpeechRecognition } from '@vueuse/core'
-import { add, cashOutline, micOutline, stopCircleOutline } from 'ionicons/icons'
+import { add, addOutline, micOutline, removeOutline, stopCircleOutline } from 'ionicons/icons'
 import { useForm } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
 import { z } from 'zod'
 import { getErrorMessage } from '@/libs/ky'
 import { useCategories } from '@/modules/categories/composables/useCategory'
-import type Category from '@/modules/categories/models/Category'
 import { useCreateCheck } from '@/modules/checks/composables/useCheck'
 
 interface Props {
@@ -203,12 +202,11 @@ const {
 })
 
 const filteredCategories = computed(() => {
-  if (!allCategories.value) return []
-  return allCategories.value.filter((cat: Category) => cat.type === type.value)
+  return allCategories.value ?? []
 })
 
 const selectedCategory = computed(() => {
-  return allCategories.value?.find((cat: Category) => cat.id === categoryId.value)
+  return allCategories.value?.find((cat) => cat.id === categoryId.value)
 })
 
 const emit = defineEmits<{

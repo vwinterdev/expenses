@@ -23,6 +23,8 @@ export const useCreateCheck = () => {
       const responseJson = await response.json()
       const newItem = Check.fromRaw(responseJson)
       queryClient.setQueryData(['checks'], (old: any) => [...(old || []), newItem])
+      queryClient.invalidateQueries({ queryKey: ['wallets'] })
+      queryClient.invalidateQueries({ queryKey: ['statistics'] })
       return newItem
     },
   })

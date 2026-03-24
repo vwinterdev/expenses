@@ -57,39 +57,7 @@
           </ion-card-content>
         </ion-card>
 
-        <!-- Категории с балансом -->
-        <div class="categories-section">
-          <h2 class="section-title">Категории</h2>
-
-          <!-- Empty state -->
-          <div v-if="!categories || categories.length === 0" class="categories-empty">
-            <ion-icon :icon="pricetagsOutline" />
-            <p>Нет категорий</p>
-            <ion-button size="small" @click="openCategoriesSettings">
-              Создать категорию
-            </ion-button>
-          </div>
-
-          <!-- Список категорий -->
-          <div v-else class="categories-list">
-            <ion-card v-for="category in categories" :key="category.id" class="category-card">
-              <ion-card-content class="category-item">
-                <div class="category-icon" :style="{ backgroundColor: category.color }">
-                  {{ category.icon }}
-                </div>
-                <div class="category-info">
-                  <div class="category-name">{{ category.name }}</div>
-                  <div class="category-type" :class="`type-${category.type}`">
-                    {{ category.type === 'income' ? 'Доход' : 'Расход' }}
-                  </div>
-                </div>
-                <div class="category-balance" :class="{ negative: category.balance < 0 }">
-                  {{ formatAmount(category.balance) }}
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </div>
-        </div>
+        <wallet-statistics :walletId="wallet.id" />
       </template>
     </div>
     <template #fixed>
@@ -113,35 +81,16 @@ import {
   IonToolbar,
 } from '@ionic/vue'
 import { useLocalStorage } from '@vueuse/core'
-import { pricetagsOutline, swapHorizontalOutline, walletOutline } from 'ionicons/icons'
-import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { swapHorizontalOutline, walletOutline } from 'ionicons/icons'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import SettingsMenu from '@/modules/app/components/settings-menu.vue'
 import CreateChecks from '@/modules/checks/components/create-checks.vue'
+import WalletStatistics from '@/modules/Wallet/components/wallet-statistics.vue'
 import { useWallet } from '@/modules/Wallet/composables/useWallet'
 
-const router = useRouter()
 const defaultWalletId = useLocalStorage('defaultWalletId', '')
 
 const { data: wallet, isLoading, isError } = useWallet(defaultWalletId)
-
-const categories = computed(() => wallet.value?.categories || [])
-
-const formatAmount = (amount: number) => {
-  return new Intl.NumberFormat('ru-RU', {
-    style: 'currency',
-    currency: 'RUB',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }).format(amount)
-}
-
-const openCategoriesSettings = () => {
-  if (wallet.value) {
-    router.push(`/categories/${wallet.value.id}`)
-  }
-}
 </script>
 
 <style scoped>

@@ -30,6 +30,7 @@ export const useCreateCategory = () => {
 
       // Обновляем кэш для конкретного кошелька
       queryClient.setQueryData(['categories', data.walletId], (old: any) => [...(old || []), newItem])
+      queryClient.invalidateQueries({ queryKey: ['wallets'] })
 
       return newItem
     },
@@ -41,8 +42,8 @@ export const useCategories = (idWallet: Ref<number>) => {
     queryKey: computed(() => ['categories', idWallet.value]),
     queryFn: async () => {
       const response = await API.get(`categories/wallet/${idWallet.value}`)
-      const responseJson = await response.json()
-      const rawItem = Array.isArray(responseJson) ? responseJson : []
+      const responseJson = await response.json<{ data: any[] }>()
+      const rawItem = Array.isArray(responseJson?.data) ? responseJson.data : []
       return rawItem.map((item: any) => Category.fromRaw(item))
     },
     enabled: computed(() => !!idWallet.value),

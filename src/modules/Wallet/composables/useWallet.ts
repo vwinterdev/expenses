@@ -18,8 +18,8 @@ export const useCreateWallet = () => {
       const response = await API.post('wallets/create', {
         json: data,
       })
-      const responseJson = await response.json()
-      const newItem = Wallet.fromRaw(responseJson)
+      const responseJson = await response.json<{ data: any }>()
+      const newItem = Wallet.fromRaw(responseJson.data)
       queryClient.setQueryData(['wallets'], (old: any) => [...old, newItem])
     },
   })
@@ -30,8 +30,8 @@ export const useWallets = () => {
     queryKey: ['wallets'],
     queryFn: async () => {
       const response = await API.get('wallets')
-      const data = await response.json()
-      const items = Array.isArray(data) ? data : []
+      const data = await response.json<{ data: any[] }>()
+      const items = Array.isArray(data?.data) ? data.data : []
       return items.map((item: any) => Wallet.fromRaw(item))
     },
   })
@@ -42,8 +42,8 @@ export const useWallet = (id: Ref<string>) => {
     queryKey: computed(() => ['wallets', id]),
     queryFn: async () => {
       const response = await API.get(`wallets/${id.value}`)
-      const data = await response.json()
-      return Wallet.fromRaw(data)
+      const data = await response.json<{ data: any }>()
+      return Wallet.fromRaw(data.data)
     },
     enabled: computed(() => !!id.value),
   })

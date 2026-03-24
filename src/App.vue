@@ -14,6 +14,7 @@ const isMobile = computed(() => {
 </script>
 <template>
   <ion-app>
+    
     <template v-if="isMobile">
       <global-loader v-if="isUserLoading" />
 
