@@ -4,6 +4,9 @@ import path from 'path'
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  build: {
+    cssMinify: 'esbuild',
+  },
   plugins: [vue(), VitePWA({
     registerType: 'autoUpdate',
     manifest: {
